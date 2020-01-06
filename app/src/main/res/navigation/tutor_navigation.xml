@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/tutor_navigation_course">
+
+    <fragment
+        android:id="@+id/tutor_navigation_course"
+        android:name="com.example.test.tutor.course.TutorCourseFragment"
+        tools:layout="@layout/fragment_course"/>
+
+    <fragment
+        android:id="@+id/tutor_navigation_forum"
+        android:name="com.example.test.tutor.forum.ForumFragment"
+        tools:layout="@layout/fragment_forum"
+        />
+
+    <fragment
+        android:id="@+id/tutor_navigation_quiz"
+        android:name="com.example.test.tutor.quiz.TutorQuizFragment"
+        tools:layout="@layout/fragment_quiz">
+
+    </fragment>
+
+
+</navigation>

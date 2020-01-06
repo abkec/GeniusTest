@@ -5,6 +5,7 @@
     android:paddingTop="10dp">
 
     <Button
+
         android:id="@+id/quizButton"
         android:layout_width="match_parent"
         android:layout_height="70dp"
@@ -13,10 +14,10 @@
         android:backgroundTint="#ffab"
         android:drawableLeft="@drawable/ic_science_quiz"
         android:drawablePadding="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
         android:paddingLeft="20dp"
+        android:paddingTop="10dp"
         android:paddingRight="20dp"
+        android:paddingBottom="10dp"
         android:text="Computer Science Warmups Level 2: Challenges"
         android:textSize="12sp">
 

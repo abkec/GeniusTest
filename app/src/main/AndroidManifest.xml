@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".StudentMenu"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/genius">
             <intent-filter>
@@ -28,13 +28,13 @@
         </activity>
 
         <activity
-            android:name=".ui.quiz.QuizQuestion"
+            android:name=".student.quiz.QuizQuestion"
             android:configChanges="orientation|screenSize"
             android:label="@string/quiz">
         </activity>
 
         <activity
-            android:name=".ui.quiz.QuizResult"
+            android:name=".student.quiz.QuizResult"
             >
         </activity>
 
@@ -42,10 +42,11 @@
         <activity android:name=".Forgot_Password" />
         <activity android:name=".Login1" />
         <activity android:name=".MainMain"></activity>
+        <activity android:name=".TutorMenu"></activity>
+        <activity android:name=".tutor.quiz.AddQuiz"></activity>
 
-        <activity android:name=".ui.course.LogicGates" />
-        <activity android:name=".ui.course.ComputerScience" />
-        <activity android:name=".ui.course.CourseContent" />
+        <activity android:name=".student.course.ComputerScience" />
+        <activity android:name=".student.course.CourseContent" />
     </application>
 
 

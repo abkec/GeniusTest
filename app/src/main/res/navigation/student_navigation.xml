@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/stud_navigation_course">
+
+    <fragment
+        android:id="@+id/stud_navigation_course"
+        android:name="com.example.test.student.course.CourseFragment"
+        tools:layout="@layout/fragment_course"/>
+
+    <fragment
+        android:id="@+id/stud_navigation_forum"
+        android:name="com.example.test.student.forum.ForumFragment"
+        tools:layout="@layout/fragment_forum"
+        />
+
+    <fragment
+        android:id="@+id/stud_navigation_quiz"
+        android:name="com.example.test.student.quiz.QuizFragment"
+        tools:layout="@layout/fragment_quiz">
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/stud_navigation_stats"
+        android:name="com.example.test.student.stats.StatsFragment"
+        />
+
+
+</navigation>
