@@ -44,6 +44,7 @@
         <activity android:name=".MainMain"></activity>
         <activity android:name=".TutorMenu"></activity>
         <activity android:name=".tutor.quiz.AddQuiz"></activity>
+        <activity android:name=".tutor.quiz.AddQuizDetail"></activity>
 
         <activity android:name=".student.course.ComputerScience" />
         <activity android:name=".student.course.CourseContent" />

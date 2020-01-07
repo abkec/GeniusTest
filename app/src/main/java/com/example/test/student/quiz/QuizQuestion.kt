@@ -29,6 +29,7 @@ class QuizQuestion : AppCompatActivity() {
     lateinit var mDatabase : DatabaseReference
     lateinit var radio: RadioButton
     var totalQuestion = 0
+    var time = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,10 +43,11 @@ class QuizQuestion : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
         toolbar.setBackgroundColor(Color.parseColor("#ffff00"))
         totalQuestion = intent.getStringExtra("count").toInt()
+        time = intent.getStringExtra("time").toInt()
         timerTxt = findViewById(R.id.timer)
 
         updateQuestion()
-        reverseTimer(5,timerTxt)
+        reverseTimer(time,timerTxt)
     }
 
     private fun updateQuestion() {

@@ -9,15 +9,28 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 import com.example.test.R
+import com.example.test.classes.Quiz
+import com.example.test.student.quiz.QuizFragment
+import com.example.test.student.quiz.QuizQuestion
+import com.firebase.ui.database.FirebaseRecyclerAdapter
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_tutor_course.view.*
 import kotlinx.android.synthetic.main.fragment_tutor_quiz.view.*
+import kotlinx.android.synthetic.main.quiz_list_layout.view.*
 
 /**
  * A simple [Fragment] subclass.
  */
 class TutorQuizFragment : Fragment() {
+
+    lateinit var mRecylerView : RecyclerView
+    lateinit var mDatabase : DatabaseReference
+    lateinit var mDatabase2 : DatabaseReference
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,63 +44,115 @@ class TutorQuizFragment : Fragment() {
             startActivity(intent)
         }
 
+        mRecylerView = view.findViewById(R.id.tutorQuizRecycler)
+        mRecylerView.setLayoutManager(LinearLayoutManager(context))
+        mDatabase = FirebaseDatabase.getInstance().getReference("Quiz")
 
-
-
-
-
-
-
-//        view.imageBtnComputerScience.setOnClickListener {
-//
-//            val listItems = arrayOf("View Course", "Edit Course", "Delete Course")
-//
-//            val builder = AlertDialog.Builder(context)
-//
-//            builder.setTitle("What do you want to perform")
-//
-//            builder.setSingleChoiceItems(listItems,-1){dialog: DialogInterface?, i: Int ->
-//
-//                if(i == 0)
-//                {
-////                    val intent = Intent(activity, CourseContent::class.java)
-////                    startActivity(intent)
-//                }
-//
-//                if(i == 1)
-//                {
-////                    val intent = Intent(activity, EditCourse::class.java)
-////                    startActivity(intent)
-//                }
-//
-//                if(i == 2)
-//                {
-//                    val delBuilder = AlertDialog.Builder(context)
-//                    delBuilder.setCancelable(true)
-//
-//                    delBuilder.setTitle("Delete Course")
-//                    delBuilder.setMessage("Are you sure want to Delete ?")
-//
-//                    delBuilder.setNegativeButton("No", DialogInterface.OnClickListener { dialog, i ->
-//                        dialog.cancel()
-//                    })
-//
-//                    delBuilder.setPositiveButton("Yes", DialogInterface.OnClickListener { dialog, i ->
-//                        dialog.cancel()
-//                    })
-//
-//                    val dialog = delBuilder.create()
-//                    dialog.show()
-//                }
-//
-//
-//            }
-//
-//            val dialog = builder.create()
-//            dialog.show()
-//        }
+        logRecyclerView()
 
         return view
+    }
+
+    private fun logRecyclerView() {
+
+        var FirebaseRecyclerAdapter = object : FirebaseRecyclerAdapter<Quiz, TutorQuizViewHolder>(
+
+            Quiz::class.java,
+            R.layout.quiz_list_layout,
+            TutorQuizViewHolder::class.java,
+            mDatabase
+        ) {
+
+            override fun populateViewHolder(viewHolder : TutorQuizViewHolder?, model: Quiz?, position:Int) {
+                viewHolder?.itemView?.quizButton?.text = model?.title
+                viewHolder?.itemView?.quizID?.text = model?.id
+
+            }
+        }
+
+        mRecylerView.adapter = FirebaseRecyclerAdapter
+    }
+
+    class TutorQuizViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView!!) {
+
+        lateinit var mDatabase2: DatabaseReference
+        var totalQuestion = 0
+        var time = ""
+
+        init {
+
+            itemView!!.setOnClickListener {
+
+                val listItems = arrayOf("Edit Course", "Delete Course")
+
+                val builder = AlertDialog.Builder(itemView.context, R.style.AlertDialogCustom)
+
+                builder.setTitle("What do you want to perform")
+
+                builder.setSingleChoiceItems(listItems,-1){dialog3: DialogInterface?, i: Int ->
+
+                    if(i == 0)
+                    {
+                        dialog3?.cancel()
+                        Toast.makeText(itemView.context,"Edit!", Toast.LENGTH_SHORT).show()
+                    }
+
+                    if(i == 1)
+                    {
+                        dialog3?.cancel()
+                        val delBuilder = AlertDialog.Builder(itemView.context, R.style.AlertDialogCustom)
+                        delBuilder.setCancelable(true)
+
+                        delBuilder.setTitle("Delete Course")
+                        delBuilder.setMessage("Are you sure want to Delete ?")
+
+                        delBuilder.setNegativeButton("No", DialogInterface.OnClickListener { dialog2, i ->
+                            dialog2.cancel()
+                        })
+
+                        delBuilder.setPositiveButton("Yes", DialogInterface.OnClickListener { dialog2, i ->
+
+                            mDatabase2 = FirebaseDatabase.getInstance().getReference("Quiz")
+                            mDatabase2.child(itemView.quizID.text.toString()).removeValue()
+
+                            mDatabase2 = FirebaseDatabase.getInstance().getReference("QuizDetail")
+                            mDatabase2.child(itemView.quizID.text.toString()).removeValue()
+                            dialog2.cancel()
+
+                            Toast.makeText(itemView.context,itemView.quizButton.text.toString() + " deleted.", Toast.LENGTH_SHORT).show()
+                        })
+
+                        val dialog = delBuilder.create()
+                        dialog.show()
+                    }
+
+
+                }
+
+                val dialog = builder.create()
+                dialog.show()
+
+
+            }
+        }
+
+        private fun readQuestion(id: String) {
+
+            mDatabase2 = FirebaseDatabase.getInstance().getReference("QuizDetail")
+            val mDatabaseRef2 = mDatabase2.child(id)
+
+            mDatabaseRef2.addValueEventListener(object : ValueEventListener {
+                override fun onCancelled(p0: DatabaseError) {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+
+                override fun onDataChange(p0: DataSnapshot) {
+
+                    totalQuestion = p0.childrenCount.toInt()
+                }
+            })
+        }
+
     }
 
 

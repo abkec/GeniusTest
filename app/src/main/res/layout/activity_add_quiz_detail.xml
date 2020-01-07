@@ -37,7 +37,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="32dp"
                     android:text="Question :"
                     android:textColor="#000000"
                     app:layout_constraintStart_toStartOf="parent"
@@ -49,7 +49,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginLeft="8dp"
-                    android:layout_marginTop="32dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
                     android:background="@drawable/course_button"
@@ -62,7 +62,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.498"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@+id/questionNum" />
 
                 <ImageView
                     android:id="@+id/imageView2"
@@ -107,22 +107,57 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/quizQuestion" />
 
-                <RadioButton
-                    android:id="@+id/firstButton"
+                <RadioGroup
+                    android:id="@+id/answerRadio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginLeft="32dp"
-                    android:layout_marginTop="8dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView7" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView7">
+
+                    <RadioButton
+                        android:id="@+id/firstButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginLeft="32dp"
+                        android:layout_marginTop="8dp"
+                        android:checked="true"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+                    <RadioButton
+                        android:id="@+id/firstButton2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginLeft="32dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/firstButton" />
+
+                    <RadioButton
+                        android:id="@+id/firstButton3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginLeft="32dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/firstButton2" />
+
+                    <RadioButton
+                        android:id="@+id/firstButton4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginLeft="32dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/firstButton3" />
+
+                </RadioGroup>
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/opt1"
                     android:layout_width="0dp"
                     android:layout_height="32dp"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginLeft="32dp"
 
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="32dp"
@@ -130,80 +165,47 @@
                     android:hint="Answer one"
                     android:textSize="10sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/firstButton"
+                    app:layout_constraintStart_toEndOf="@+id/answerRadio"
                     app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/opt2"
                     android:layout_width="0dp"
                     android:layout_height="32dp"
-                    android:layout_marginStart="32dp"
 
-                    android:layout_marginLeft="32dp"
                     android:layout_marginEnd="32dp"
                     android:layout_marginRight="32dp"
                     android:hint="Answer two"
                     android:textSize="10sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/firstButton2"
+                    app:layout_constraintStart_toEndOf="@+id/answerRadio"
                     app:layout_constraintTop_toBottomOf="@+id/opt1" />
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/opt3"
                     android:layout_width="0dp"
                     android:layout_height="32dp"
-                    android:layout_marginStart="32dp"
 
-                    android:layout_marginLeft="32dp"
                     android:layout_marginEnd="32dp"
                     android:layout_marginRight="32dp"
                     android:hint="Answer three"
                     android:textSize="10sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/firstButton3"
+                    app:layout_constraintStart_toEndOf="@+id/answerRadio"
                     app:layout_constraintTop_toBottomOf="@+id/opt2" />
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/opt4"
                     android:layout_width="0dp"
                     android:layout_height="32dp"
-                    android:layout_marginStart="32dp"
 
-                    android:layout_marginLeft="32dp"
                     android:layout_marginEnd="32dp"
                     android:layout_marginRight="32dp"
                     android:hint="Answer four"
                     android:textSize="10sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/firstButton4"
+                    app:layout_constraintStart_toEndOf="@+id/answerRadio"
                     app:layout_constraintTop_toBottomOf="@+id/opt3" />
-
-                <RadioButton
-                    android:id="@+id/firstButton2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginLeft="32dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/firstButton" />
-
-                <RadioButton
-                    android:id="@+id/firstButton3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginLeft="32dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/firstButton2" />
-
-                <RadioButton
-                    android:id="@+id/firstButton4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginLeft="32dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/firstButton3" />
 
                 <Button
                     android:id="@+id/continueButton"
@@ -220,7 +222,24 @@
                     android:text="Add Question"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/firstButton4" />
+                    app:layout_constraintTop_toBottomOf="@+id/answerRadio" />
+
+                <Button
+                    android:id="@+id/finishButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="#2AF13A"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="Finish"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/continueButton" />
 
                 <Button
                     android:id="@+id/prevButton"
@@ -232,7 +251,7 @@
                     android:background="#FF328A"
                     android:text="Previous"
                     app:layout_constraintEnd_toStartOf="@+id/questionNum"
-                    app:layout_constraintTop_toBottomOf="@+id/continueButton" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/questionNum"
@@ -243,7 +262,7 @@
                     android:textColor="#000000"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/continueButton" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
                     android:id="@+id/nextButton"
@@ -255,7 +274,7 @@
                     android:background="#FF328A"
                     android:text="Next"
                     app:layout_constraintStart_toEndOf="@+id/questionNum"
-                    app:layout_constraintTop_toBottomOf="@+id/continueButton" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

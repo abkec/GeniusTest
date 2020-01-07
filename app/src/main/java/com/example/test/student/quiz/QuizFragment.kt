@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +16,7 @@ import com.example.test.classes.Quiz
 import com.example.test.R
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.google.firebase.database.*
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.quiz_list_layout.view.*
 
 
@@ -58,7 +60,7 @@ class QuizFragment : Fragment() {
             override fun populateViewHolder(viewHolder : QuizViewHolder?, model: Quiz?, position:Int) {
                 viewHolder?.itemView?.quizButton?.text = model?.title
                 viewHolder?.itemView?.quizID?.text = model?.id
-
+                Picasso.with(context).load(model?.image?.toUri()).into(viewHolder?.itemView?.quizImg)
             }
         }
 
@@ -71,12 +73,14 @@ class QuizFragment : Fragment() {
 
         lateinit var mDatabase2 : DatabaseReference
         var totalQuestion = 0
+        var time = ""
 
         init {
 
             itemView!!.setOnClickListener{
 
                 readQuestion(itemView.quizID.text.toString())
+                readTime(itemView.quizID.text.toString())
 
                 val builder = AlertDialog.Builder(itemView.context, R.style.AlertDialogCustom)
 
@@ -88,6 +92,7 @@ class QuizFragment : Fragment() {
                     intent.putExtra("title", itemView.quizButton.text)
                     intent.putExtra("id", itemView.quizID.text)
                     intent.putExtra("count", totalQuestion.toString())
+                    intent.putExtra("time", time)
                     itemView.context.startActivity(intent)
                     Toast.makeText(itemView.context,"Start!", Toast.LENGTH_SHORT).show()
                 }
@@ -116,6 +121,23 @@ class QuizFragment : Fragment() {
                 override fun onDataChange(p0: DataSnapshot) {
 
                     totalQuestion = p0.childrenCount.toInt()
+                }
+            })
+        }
+
+        private fun readTime(id: String) {
+
+            mDatabase2 = FirebaseDatabase.getInstance().getReference("Quiz")
+            val mDatabaseRef2 = mDatabase2.child(id)
+
+            mDatabaseRef2.addValueEventListener(object: ValueEventListener {
+                override fun onCancelled(p0: DatabaseError) {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+
+                override fun onDataChange(p0: DataSnapshot) {
+
+                    time = p0.child("time").value.toString()
                 }
             })
         }
