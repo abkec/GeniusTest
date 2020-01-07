@@ -24,6 +24,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.OnProgressListener
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_add_quiz.*
 import kotlinx.android.synthetic.main.activity_add_quiz.continueButton
 import kotlinx.android.synthetic.main.activity_add_quiz_detail.*
@@ -33,6 +34,7 @@ import kotlin.coroutines.Continuation
 
 class AddQuizDetail : AppCompatActivity() {
 
+    lateinit var imgurl : Uri
     var total = 0
     var count = 0
     private val questions: MutableList<Question> = mutableListOf()
@@ -48,6 +50,8 @@ class AddQuizDetail : AppCompatActivity() {
     lateinit var mDatabase: FirebaseDatabase
     lateinit var mStorageRef: FirebaseStorage
     lateinit var mDatabase2: FirebaseDatabase
+    lateinit var img : ImageView
+    lateinit var btnUpload : Button
     var totalQuiz = 0
     lateinit var quizImg : Uri
 
@@ -68,6 +72,8 @@ class AddQuizDetail : AppCompatActivity() {
         var quizTitle = intent.getStringExtra("quizTitle")
         var quizTime = intent.getStringExtra("quizTime")
         quizImg = intent.getStringExtra("quizImg").toUri()
+        btnUpload = findViewById<Button>(R.id.btnUploadPhoto2)
+        img = findViewById<ImageView>(R.id.imageView2)
         var radio: RadioButton
 
         setSupportActionBar(toolbar)
@@ -101,7 +107,6 @@ class AddQuizDetail : AppCompatActivity() {
                     mStorageRef = FirebaseStorage.getInstance()
                     mDatabase = FirebaseDatabase.getInstance()
 
-
                     mDataBaseReference = mDatabase!!.reference!!.child("Quiz")
                     mDataBaseReference.child(totalQuiz.toString()).child("id").setValue(totalQuiz.toString())
                     mDataBaseReference.child(totalQuiz.toString()).child("title").setValue(quizTitle)
@@ -130,19 +135,7 @@ class AddQuizDetail : AppCompatActivity() {
                             }
                         }
 
-
-
-//                        var uploadTask = fileReference.putFile(quizImg).addOnSuccessListener(object : OnSuccessListener<UploadTask.TaskSnapshot> {
-//                            override fun onSuccess(p0: UploadTask.TaskSnapshot?) {
-//                                imgRef.child("image").setValue(toString())
-//                            }
-//                        })
-
                     }
-
-
-
-
 
                     mDatabase = FirebaseDatabase.getInstance()
                     val mDataBaseReference2 = mDatabase!!.reference!!.child("QuizDetail")
@@ -157,6 +150,29 @@ class AddQuizDetail : AppCompatActivity() {
                         mDataBaseReference2.child(totalQuiz.toString()).child(qCount.toString()).child("opt3").setValue(questions[qCount-1].opt3)
                         mDataBaseReference2.child(totalQuiz.toString()).child(qCount.toString()).child("opt4").setValue(questions[qCount-1].opt4)
                         mDataBaseReference2.child(totalQuiz.toString()).child(qCount.toString()).child("question").setValue(questions[qCount-1].question)
+
+                        var fileReference2 : StorageReference = mStorageRef.reference.child(System.currentTimeMillis().toString() + "." + getFileExtension(
+                            questions[qCount-1].image!!
+                        ))
+                        var imgRef2 = mDataBaseReference2.child(totalQuiz.toString()).child(qCount.toString())
+
+                        val ref = fileReference2
+                        var a = fileReference2.putFile(questions[qCount-1].image!!)
+                        val ab = a.continueWithTask { task ->
+                            if (!task.isSuccessful) {
+                                task.exception?.let {
+                                    throw it
+                                }
+                            }
+                            ref.downloadUrl
+                        }.addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                imgRef2.child("image").setValue(task.result.toString())
+                            } else {
+                                // Handle failures
+                                // ...
+                            }
+                        }
                         qCount++
                     }
 
@@ -192,7 +208,7 @@ class AddQuizDetail : AppCompatActivity() {
                     else
                         ans = option4.text.toString()
 
-                    val question = Question(questionTxt.text.toString(), option1.text.toString(), option2.text.toString(),option3.text.toString(),option4.text.toString(), ans)
+                    val question = Question(questionTxt.text.toString(), option1.text.toString(), option2.text.toString(),option3.text.toString(),option4.text.toString(), ans, imgurl)
                     questions.add(question)
                     total++
                     count++
@@ -227,6 +243,7 @@ class AddQuizDetail : AppCompatActivity() {
                     val question = Question(questionTxt.text.toString(), option1.text.toString(), option2.text.toString(),option3.text.toString(),option4.text.toString(), ans)
                     questions.set(count, question)
                     Snackbar.make(findViewById(R.id.drawerLayout), "Question updated. ", Snackbar.LENGTH_SHORT).show()
+                    img.setImageResource(0)
                 }
             }
         }
@@ -257,6 +274,29 @@ class AddQuizDetail : AppCompatActivity() {
                 continueButton.text = "Update Question"
             }
         }
+
+        btnUpload.setOnClickListener{
+
+            filechooser()
+        }
+    }
+
+    private fun filechooser() {
+
+        val intent = Intent()
+        intent.setType("image/*")
+        intent.setAction(Intent.ACTION_GET_CONTENT)
+        startActivityForResult(intent, 1)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.data != null) {
+
+            imgurl = data.getData()!!
+            Picasso.with(this).load(imgurl).into(img)
+        }
+
     }
 
     private fun getFileExtension (uri: Uri) : String? {
@@ -290,7 +330,7 @@ class AddQuizDetail : AppCompatActivity() {
         option2.setText("")
         option3.setText("")
         option4.setText("")
-
+        img.setImageResource(0)
     }
 
     private fun setAllText(counter : Int) {
@@ -301,6 +341,7 @@ class AddQuizDetail : AppCompatActivity() {
         option2.setText(displayQuestion.opt2)
         option3.setText(displayQuestion.opt3)
         option4.setText(displayQuestion.opt4)
+        Picasso.with(this).load(displayQuestion.image).into(img)
 
         if (displayQuestion.opt1 == displayQuestion.answer)
             firstButton.setChecked(true)

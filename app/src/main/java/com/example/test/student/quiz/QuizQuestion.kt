@@ -15,8 +15,10 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.core.net.toUri
 import com.example.test.R
 import com.google.firebase.database.*
+import com.squareup.picasso.Picasso
 
 
 class QuizQuestion : AppCompatActivity() {
@@ -94,6 +96,7 @@ class QuizQuestion : AppCompatActivity() {
                     thirdAnswerRadioButton.text = p0.child("opt3").value as String
                     fourthAnswerRadioButton.text = p0.child("opt4").value as String
                     questionText.text = p0.child("question").value as String
+                    Picasso.with(this@QuizQuestion).load( (p0.child("image").value as String).toUri()).into(questionImg)
 
                     questionRadioGroup.setOnCheckedChangeListener(
                         RadioGroup.OnCheckedChangeListener { group, checkedId ->
