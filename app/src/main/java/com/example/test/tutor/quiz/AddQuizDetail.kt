@@ -71,6 +71,7 @@ class AddQuizDetail : AppCompatActivity() {
         option4 = findViewById(R.id.opt4)
         var quizTitle = intent.getStringExtra("quizTitle")
         var quizTime = intent.getStringExtra("quizTime")
+        var quizColor = intent.getStringExtra("quizColor")
         quizImg = intent.getStringExtra("quizImg").toUri()
         btnUpload = findViewById<Button>(R.id.btnUploadPhoto2)
         img = findViewById<ImageView>(R.id.imageView2)
@@ -80,7 +81,7 @@ class AddQuizDetail : AppCompatActivity() {
         supportActionBar?.title = "Add Question"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        toolbar.setBackgroundColor(Color.parseColor("#03fcfc"))
+        toolbar.setBackgroundColor(Color.parseColor(quizColor))
 
         readQuestion()
 
@@ -111,6 +112,8 @@ class AddQuizDetail : AppCompatActivity() {
                     mDataBaseReference.child(totalQuiz.toString()).child("id").setValue(totalQuiz.toString())
                     mDataBaseReference.child(totalQuiz.toString()).child("title").setValue(quizTitle)
                     mDataBaseReference.child(totalQuiz.toString()).child("time").setValue(quizTime)
+                    mDataBaseReference.child(totalQuiz.toString()).child("color").setValue(quizColor)
+
 
                     if (quizImg != null) {
 

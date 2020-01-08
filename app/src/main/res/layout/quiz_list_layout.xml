@@ -13,7 +13,6 @@
         android:layout_height="70dp"
         android:layout_marginBottom="5dp"
         android:background="@drawable/course_button"
-        android:backgroundTint="#ffab"
         android:drawablePadding="20dp"
         android:paddingLeft="80dp"
         android:paddingTop="10dp"
@@ -26,6 +25,14 @@
 
     <TextView
         android:id="@+id/quizID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:cursorVisible="false"
+        android:text="TextView"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/quizColor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:cursorVisible="false"

@@ -2,6 +2,8 @@ package com.example.test.student.quiz
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -61,6 +63,9 @@ class QuizFragment : Fragment() {
                 viewHolder?.itemView?.quizButton?.text = model?.title
                 viewHolder?.itemView?.quizID?.text = model?.id
                 Picasso.with(context).load(model?.image?.toUri()).into(viewHolder?.itemView?.quizImg)
+                viewHolder?.itemView?.quizColor?.text = model?.color
+                viewHolder?.itemView?.quizButton?.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(model?.color)))
+
             }
         }
 
@@ -93,6 +98,7 @@ class QuizFragment : Fragment() {
                     intent.putExtra("id", itemView.quizID.text)
                     intent.putExtra("count", totalQuestion.toString())
                     intent.putExtra("time", time)
+                    intent.putExtra("color", itemView.quizColor.text)
                     itemView.context.startActivity(intent)
                     Toast.makeText(itemView.context,"Start!", Toast.LENGTH_SHORT).show()
                 }

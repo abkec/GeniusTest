@@ -43,11 +43,13 @@ class QuizQuestion : AppCompatActivity() {
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_close_24px)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        toolbar.setBackgroundColor(Color.parseColor("#ffff00"))
+
         totalQuestion = intent.getStringExtra("count").toInt()
         time = intent.getStringExtra("time").toInt()
         timerTxt = findViewById(R.id.timer)
+        var color = intent.getStringExtra("color")
 
+        toolbar.setBackgroundColor(Color.parseColor(color))
         updateQuestion()
         reverseTimer(time,timerTxt)
     }

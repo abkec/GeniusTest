@@ -12,7 +12,7 @@
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
         android:background="@drawable/course_button"
-        android:backgroundTint="#ffcccc"
+        android:color="#ffcccc"
         android:drawableBottom="@drawable/ic_science"
         android:paddingLeft="10dp"
         android:paddingTop="10dp"

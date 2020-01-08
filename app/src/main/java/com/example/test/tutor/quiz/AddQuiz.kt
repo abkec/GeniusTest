@@ -29,6 +29,7 @@ class AddQuiz : AppCompatActivity() {
     lateinit var mStorageRef : StorageReference
     lateinit var img : ImageView
     lateinit var btnUpload : Button
+    var mainColor = "#f23863"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +43,7 @@ class AddQuiz : AppCompatActivity() {
         supportActionBar?.title = "Add new quiz"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        toolbar.setBackgroundColor(Color.parseColor("#03fcfc"))
+        toolbar.setBackgroundColor(Color.parseColor(mainColor))
 
         continueButton.setOnClickListener{
 
@@ -57,9 +58,53 @@ class AddQuiz : AppCompatActivity() {
                 myIntent.putExtra("quizTitle", titleText.text.toString())
                 myIntent.putExtra("quizTime", quizText.text.toString())
                 myIntent.putExtra("quizImg", imgurl.toString())
+                myIntent.putExtra("quizColor", mainColor)
                 startActivity(myIntent)
             }
         }
+
+        purpleColor.setOnClickListener{
+
+            mainColor = "#f23bff"
+            toolbar.setBackgroundColor(Color.parseColor(mainColor))
+        }
+
+        blueColor.setOnClickListener{
+
+            mainColor = "#4c8fed"
+            toolbar.setBackgroundColor(Color.parseColor(mainColor))
+        }
+
+        greenColor.setOnClickListener{
+
+            mainColor = "#29e348"
+            toolbar.setBackgroundColor(Color.parseColor(mainColor))
+        }
+
+        orangeColor.setOnClickListener{
+
+            mainColor = "#f2c42c"
+            toolbar.setBackgroundColor(Color.parseColor(mainColor))
+        }
+
+        redColor.setOnClickListener{
+
+            mainColor = "#f23863"
+            toolbar.setBackgroundColor(Color.parseColor(mainColor))
+        }
+
+        mintColor.setOnClickListener{
+
+            mainColor = "#3fe8be"
+            toolbar.setBackgroundColor(Color.parseColor(mainColor))
+        }
+
+        miColor.setOnClickListener{
+
+            mainColor = "#f23bff"
+            toolbar.setBackgroundColor(Color.parseColor(mainColor))
+        }
+
 
         btnUpload = findViewById<Button>(R.id.btnUploadPhoto)
         img = findViewById<ImageView>(R.id.quizImage)

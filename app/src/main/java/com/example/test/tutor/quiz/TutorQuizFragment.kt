@@ -1,15 +1,21 @@
 package com.example.test.tutor.quiz
 
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
+import android.graphics.PorterDuff
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -19,6 +25,7 @@ import com.example.test.student.quiz.QuizFragment
 import com.example.test.student.quiz.QuizQuestion
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.google.firebase.database.*
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_tutor_course.view.*
 import kotlinx.android.synthetic.main.fragment_tutor_quiz.view.*
 import kotlinx.android.synthetic.main.quiz_list_layout.view.*
@@ -26,6 +33,7 @@ import kotlinx.android.synthetic.main.quiz_list_layout.view.*
 /**
  * A simple [Fragment] subclass.
  */
+@Suppress("DEPRECATION")
 class TutorQuizFragment : Fragment() {
 
     lateinit var mRecylerView : RecyclerView
@@ -63,9 +71,13 @@ class TutorQuizFragment : Fragment() {
             mDatabase
         ) {
 
+            @SuppressLint("Range")
             override fun populateViewHolder(viewHolder : TutorQuizViewHolder?, model: Quiz?, position:Int) {
                 viewHolder?.itemView?.quizButton?.text = model?.title
                 viewHolder?.itemView?.quizID?.text = model?.id
+                Picasso.with(context).load(model?.image?.toUri()).into(viewHolder?.itemView?.quizImg)
+                viewHolder?.itemView?.quizColor?.text = model?.color
+                viewHolder?.itemView?.quizButton?.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(model?.color)))
 
             }
         }
