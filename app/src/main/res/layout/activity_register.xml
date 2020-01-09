@@ -66,7 +66,6 @@
             android:layout_marginTop="7dp"
             android:layout_marginEnd="32dp"
             android:background="@drawable/edit_rectangle"
-            android:drawableEnd="@drawable/sharp_visibility_off_white_18dp"
             android:ems="10"
             android:hint="@string/password"
             android:inputType="textPassword"
@@ -85,7 +84,6 @@
             android:layout_marginTop="7dp"
             android:layout_marginEnd="32dp"
             android:background="@drawable/edit_rectangle"
-            android:drawableEnd="@drawable/sharp_visibility_off_white_18dp"
             android:ems="10"
             android:hint="@string/confirm_pw"
             android:inputType="textPassword"
@@ -130,38 +128,64 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/first_name" />
 
-        <EditText
-            android:id="@+id/birth_date"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
+        <RadioGroup
+            android:id="@+id/user_selection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="7dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="32dp"
-            android:background="@drawable/edit_rectangle"
-            android:ems="10"
-            android:hint="@string/birthday"
-            android:inputType="date"
-            android:paddingLeft="20dp"
+            android:layout_marginRight="32dp"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/last_name" />
+            app:layout_constraintTop_toBottomOf="@+id/last_name">
+
+            <RadioButton
+                android:id="@+id/tutor"
+                android:layout_width="79dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:checked="true"
+                android:text="@string/tutor_radio" />
+
+            <RadioButton
+                android:id="@+id/student"
+                android:layout_width="95dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="116dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="50dp"
+                android:padding="5dp"
+                android:text="@string/student_radio" />
+
+        </RadioGroup>
 
         <Button
             android:id="@+id/register_account_button"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="120dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="120dp"
             android:background="@drawable/button_login"
+            android:fontFamily="@font/roboto_light"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:text="@string/register_account"
+            android:textAlignment="center"
+            android:textAllCaps="true"
             android:textColor="#FFFFFF"
             android:textSize="13sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintHorizontal_bias="0.476"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/birth_date" />
+            app:layout_constraintTop_toBottomOf="@+id/user_selection" />
 
         <TextView
             android:id="@+id/existing"
@@ -234,5 +258,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/terms_condition" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </ScrollView>

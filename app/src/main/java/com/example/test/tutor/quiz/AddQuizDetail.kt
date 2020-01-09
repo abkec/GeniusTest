@@ -7,11 +7,13 @@ import android.graphics.Color
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.*
 import androidx.appcompat.widget.Toolbar
 import androidx.core.net.toUri
+import com.example.test.Login1
 import com.example.test.classes.Question
 import com.example.test.R
 import com.example.test.TutorMenu
@@ -19,6 +21,7 @@ import com.example.test.student.quiz.QuizQuestion
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.OnProgressListener
@@ -46,7 +49,6 @@ class AddQuizDetail : AppCompatActivity() {
     lateinit var option3 : EditText
     lateinit var option4 : EditText
     lateinit var mDataBaseReference: DatabaseReference
-    lateinit var mDataBaseReference2: DatabaseReference
     lateinit var mDatabase: FirebaseDatabase
     lateinit var mStorageRef: FirebaseStorage
     lateinit var mDatabase2: FirebaseDatabase
@@ -54,6 +56,7 @@ class AddQuizDetail : AppCompatActivity() {
     lateinit var btnUpload : Button
     var totalQuiz = 0
     lateinit var quizImg : Uri
+    private var mAuth: FirebaseAuth? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -109,16 +112,16 @@ class AddQuizDetail : AppCompatActivity() {
                     mDatabase = FirebaseDatabase.getInstance()
 
                     mDataBaseReference = mDatabase!!.reference!!.child("Quiz")
-                    mDataBaseReference.child(totalQuiz.toString()).child("id").setValue(totalQuiz.toString())
-                    mDataBaseReference.child(totalQuiz.toString()).child("title").setValue(quizTitle)
-                    mDataBaseReference.child(totalQuiz.toString()).child("time").setValue(quizTime)
-                    mDataBaseReference.child(totalQuiz.toString()).child("color").setValue(quizColor)
+                    mDataBaseReference.child(totalQuiz.plus(1).toString()).child("id").setValue(totalQuiz.plus(1).toString())
+                    mDataBaseReference.child(totalQuiz.plus(1).toString()).child("title").setValue(quizTitle)
+                    mDataBaseReference.child(totalQuiz.plus(1).toString()).child("time").setValue(quizTime)
+                    mDataBaseReference.child(totalQuiz.plus(1).toString()).child("color").setValue(quizColor)
 
 
                     if (quizImg != null) {
 
                         var fileReference : StorageReference = mStorageRef.reference.child(System.currentTimeMillis().toString() + "." + getFileExtension(quizImg))
-                        var imgRef = mDataBaseReference.child(totalQuiz.toString())
+                        var imgRef = mDataBaseReference.child(totalQuiz.plus(1).toString())
 
                         val ref = fileReference
                         var a = fileReference.putFile(quizImg)
@@ -141,26 +144,80 @@ class AddQuizDetail : AppCompatActivity() {
                     }
 
                     mDatabase = FirebaseDatabase.getInstance()
-                    val mDataBaseReference2 = mDatabase!!.reference!!.child("QuizDetail")
+                    var mDataBaseReference2 = mDatabase!!.reference!!.child("QuizDetail")
 
 
                     var qCount = 1
                     questions.forEach {
 
-                        mDataBaseReference2.child(totalQuiz.toString()).child(qCount.toString()).child("answer").setValue(questions[qCount-1].answer)
-                        mDataBaseReference2.child(totalQuiz.toString()).child(qCount.toString()).child("opt1").setValue(questions[qCount-1].opt1)
-                        mDataBaseReference2.child(totalQuiz.toString()).child(qCount.toString()).child("opt2").setValue(questions[qCount-1].opt2)
-                        mDataBaseReference2.child(totalQuiz.toString()).child(qCount.toString()).child("opt3").setValue(questions[qCount-1].opt3)
-                        mDataBaseReference2.child(totalQuiz.toString()).child(qCount.toString()).child("opt4").setValue(questions[qCount-1].opt4)
-                        mDataBaseReference2.child(totalQuiz.toString()).child(qCount.toString()).child("question").setValue(questions[qCount-1].question)
+                        Log.d("test", qCount.toString())
+                        mDataBaseReference2.child(totalQuiz.plus(1).toString()).child(qCount.toString())
+                            .child("answer").setValue(questions[qCount - 1].answer)
+                        mDataBaseReference2.child(totalQuiz.plus(1).toString()).child(qCount.toString())
+                            .child("opt1").setValue(questions[qCount - 1].opt1)
+                        mDataBaseReference2.child(totalQuiz.plus(1).toString()).child(qCount.toString())
+                            .child("opt2").setValue(questions[qCount - 1].opt2)
+                        mDataBaseReference2.child(totalQuiz.plus(1).toString()).child(qCount.toString())
+                            .child("opt3").setValue(questions[qCount - 1].opt3)
+                        mDataBaseReference2.child(totalQuiz.plus(1).toString()).child(qCount.toString())
+                            .child("opt4").setValue(questions[qCount - 1].opt4)
+                        mDataBaseReference2.child(totalQuiz.plus(1).toString()).child(qCount.toString())
+                            .child("question").setValue(questions[qCount - 1].question)
 
-                        var fileReference2 : StorageReference = mStorageRef.reference.child(System.currentTimeMillis().toString() + "." + getFileExtension(
-                            questions[qCount-1].image!!
-                        ))
-                        var imgRef2 = mDataBaseReference2.child(totalQuiz.toString()).child(qCount.toString())
+                        if (questions[qCount-1].image != null) {
 
-                        val ref = fileReference2
-                        var a = fileReference2.putFile(questions[qCount-1].image!!)
+                            var fileReference2: StorageReference = mStorageRef.reference.child(
+                                System.currentTimeMillis().toString() + "." + getFileExtension(
+                                    questions[qCount - 1].image!!
+                                )
+                            )
+                            var imgRef2 = mDataBaseReference2.child(totalQuiz.plus(1).toString())
+                                .child(qCount.toString())
+
+                            val ref = fileReference2
+                            var a = fileReference2.putFile(questions[qCount - 1].image!!)
+                            val ab = a.continueWithTask { task ->
+                                if (!task.isSuccessful) {
+                                    task.exception?.let {
+                                        throw it
+                                    }
+                                }
+                                ref.downloadUrl
+                            }.addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    imgRef2.child("image").setValue(task.result.toString())
+                                } else {
+                                    // Handle failures
+                                    // ...
+                                }
+                            }
+
+                        }
+
+                        else {
+                            mDataBaseReference2.child(totalQuiz.plus(1).toString()).child(qCount.toString())
+                                .child("image").setValue("")
+                        }
+
+                        qCount++
+                    }
+
+                    //User
+                    val currentuser = FirebaseAuth.getInstance().currentUser!!.uid
+                    val mDb = FirebaseDatabase.getInstance().getReference("Users").child(currentuser)
+                    mDataBaseReference = mDb.child("Quiz")
+                    mDataBaseReference.child(totalQuiz.plus(1).toString()).child("id").setValue(totalQuiz.plus(1).toString())
+                    mDataBaseReference.child(totalQuiz.plus(1).toString()).child("title").setValue(quizTitle)
+                    mDataBaseReference.child(totalQuiz.plus(1).toString()).child("time").setValue(quizTime)
+                    mDataBaseReference.child(totalQuiz.plus(1).toString()).child("color").setValue(quizColor)
+
+                    if (quizImg != null) {
+
+                        var fileReference : StorageReference = mStorageRef.reference.child(System.currentTimeMillis().toString() + "." + getFileExtension(quizImg))
+                        var imgRef = mDataBaseReference.child(totalQuiz.plus(1).toString())
+
+                        val ref = fileReference
+                        var a = fileReference.putFile(quizImg)
                         val ab = a.continueWithTask { task ->
                             if (!task.isSuccessful) {
                                 task.exception?.let {
@@ -170,19 +227,78 @@ class AddQuizDetail : AppCompatActivity() {
                             ref.downloadUrl
                         }.addOnCompleteListener { task ->
                             if (task.isSuccessful) {
-                                imgRef2.child("image").setValue(task.result.toString())
+                                imgRef.child("image").setValue(task.result.toString())
                             } else {
                                 // Handle failures
                                 // ...
                             }
                         }
+                    }
+
+                    mDatabase = FirebaseDatabase.getInstance()
+                    mDataBaseReference2 = mDb.child("QuizDetail")
+
+                    qCount = 1
+                    questions.forEach {
+
+                        mDataBaseReference2.child(totalQuiz.plus(1).toString()).child(qCount.toString())
+                            .child("answer").setValue(questions[qCount - 1].answer)
+                        mDataBaseReference2.child(totalQuiz.plus(1).toString()).child(qCount.toString())
+                            .child("opt1").setValue(questions[qCount - 1].opt1)
+                        mDataBaseReference2.child(totalQuiz.plus(1).toString()).child(qCount.toString())
+                            .child("opt2").setValue(questions[qCount - 1].opt2)
+                        mDataBaseReference2.child(totalQuiz.plus(1).toString()).child(qCount.toString())
+                            .child("opt3").setValue(questions[qCount - 1].opt3)
+                        mDataBaseReference2.child(totalQuiz.plus(1).toString()).child(qCount.toString())
+                            .child("opt4").setValue(questions[qCount - 1].opt4)
+                        mDataBaseReference2.child(totalQuiz.plus(1).toString()).child(qCount.toString())
+                            .child("question").setValue(questions[qCount - 1].question)
+
+                        if (questions[qCount-1].image != null) {
+
+                            var fileReference2: StorageReference = mStorageRef.reference.child(
+                                System.currentTimeMillis().toString() + "." + getFileExtension(
+                                    questions[qCount - 1].image!!
+                                )
+                            )
+                            var imgRef2 = mDataBaseReference2.child(totalQuiz.plus(1).toString())
+                                .child(qCount.toString())
+
+                            val ref = fileReference2
+                            var a = fileReference2.putFile(questions[qCount - 1].image!!)
+                            val ab = a.continueWithTask { task ->
+                                if (!task.isSuccessful) {
+                                    task.exception?.let {
+                                        throw it
+                                    }
+                                }
+                                ref.downloadUrl
+                            }.addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    imgRef2.child("image").setValue(task.result.toString())
+                                } else {
+                                    // Handle failures
+                                    // ...
+                                }
+                            }
+
+                        }
+
+                        else {
+                            mDataBaseReference2.child(totalQuiz.plus(1).toString()).child(qCount.toString())
+                                .child("image").setValue("")
+                        }
+
                         qCount++
                     }
 
-                    finish()
-                    val intent = Intent(this, TutorMenu::class.java)
-                    startActivity(intent)
                     Toast.makeText(this,"Quiz added!", Toast.LENGTH_SHORT).show()
+
+                    finish()
+                    val intent = Intent(this, TutorMenu:: class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    startActivity(intent)
+
 
                 }
                 builder.setNeutralButton("Cancel"){_,_ ->
@@ -211,8 +327,19 @@ class AddQuizDetail : AppCompatActivity() {
                     else
                         ans = option4.text.toString()
 
-                    val question = Question(questionTxt.text.toString(), option1.text.toString(), option2.text.toString(),option3.text.toString(),option4.text.toString(), ans, imgurl)
+                    val question:Question
+
+                    if (img.drawable == null) {
+                        question = Question(questionTxt.text.toString(), option1.text.toString(), option2.text.toString(),option3.text.toString(),option4.text.toString(), ans, null)
+                    }
+
+                    else {
+
+                        question = Question(questionTxt.text.toString(), option1.text.toString(), option2.text.toString(),option3.text.toString(),option4.text.toString(), ans, imgurl)
+                    }
+
                     questions.add(question)
+                    Log.d("test", questions.toString())
                     total++
                     count++
 
@@ -243,10 +370,19 @@ class AddQuizDetail : AppCompatActivity() {
                     else
                         ans = option4.text.toString()
 
-                    val question = Question(questionTxt.text.toString(), option1.text.toString(), option2.text.toString(),option3.text.toString(),option4.text.toString(), ans)
-                    questions.set(count, question)
+                    val question2:Question
+
+                    if (img.drawable == null) {
+                        question2 = Question(questionTxt.text.toString(), option1.text.toString(), option2.text.toString(),option3.text.toString(),option4.text.toString(), ans, null)
+                    }
+
+                    else {
+
+                        question2 = Question(questionTxt.text.toString(), option1.text.toString(), option2.text.toString(),option3.text.toString(),option4.text.toString(), ans, imgurl)
+                    }
+
+                    questions.set(count, question2)
                     Snackbar.make(findViewById(R.id.drawerLayout), "Question updated. ", Snackbar.LENGTH_SHORT).show()
-                    img.setImageResource(0)
                 }
             }
         }
@@ -312,16 +448,21 @@ class AddQuizDetail : AppCompatActivity() {
     private fun readQuestion() {
 
         mDatabase2 = FirebaseDatabase.getInstance()
-        mDataBaseReference2 = mDatabase2!!.reference!!.child("Quiz")
 
-        mDataBaseReference2.addValueEventListener(object: ValueEventListener {
+        val mDatabaseRef2 = mDatabase2!!.reference!!.child("Quiz")
+        val lastQuery = mDatabaseRef2.orderByKey().limitToLast(1)
+        lastQuery.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
             override fun onDataChange(p0: DataSnapshot) {
 
-                totalQuiz = p0.childrenCount.toInt().plus(1)
+                for (data in p0.getChildren()) {
+
+                    totalQuiz = data.getKey()!!.toInt()
+                }
+
             }
         })
     }
@@ -356,6 +497,11 @@ class AddQuizDetail : AppCompatActivity() {
             firstButton4.setChecked(true)
 
         questionNum.text = "Question " + counter.plus(1)
+    }
+
+    override fun onBackPressed() {
+
+        finish()
     }
 
     override fun onSupportNavigateUp(): Boolean {

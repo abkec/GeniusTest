@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <RelativeLayout
+        android:id="@+id/drawerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        >
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar2"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="?attr/actionBarSize"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.tutor.AddCourse">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="140dp"
+                    android:layout_height="140dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="60dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginRight="30dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.497"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@android:color/darker_gray" />
+
+                <Button
+                    android:id="@+id/btnUploadPhoto"
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/course_button"
+                    android:backgroundTint="@android:color/darker_gray"
+                    android:fontFamily="@font/roboto"
+                    android:gravity="center"
+                    android:padding="3dp"
+                    android:text="Upload Photo"
+                    android:textColor="@android:color/black"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView"
+                    app:layout_constraintStart_toStartOf="@+id/imageView"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+
+                <TextView
+                    android:id="@+id/textView_courseName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="52dp"
+                    android:text="Course Name : "
+                    android:textColor="@color/text"
+                    android:textSize="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/btnUploadPhoto" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ti_courseName"
+                    android:layout_width="215dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="36dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
+                    android:hint="Course Name"
+                    android:inputType="text"
+                    app:errorEnabled="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/textView_courseName"
+                    app:layout_constraintTop_toBottomOf="@+id/btnUploadPhoto" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="44dp"
+                    android:text="Overview : "
+                    android:textColor="@color/text"
+                    android:textSize="16dp"
+                    app:layout_constraintStart_toStartOf="@+id/textView_courseName"
+                    app:layout_constraintTop_toBottomOf="@+id/textView_courseName" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ti_overview"
+                    android:layout_width="225dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
+                    android:hint="Overview"
+                    android:inputType="text"
+                    app:errorEnabled="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.178"
+                    app:layout_constraintStart_toEndOf="@+id/textView3"
+                    app:layout_constraintTop_toBottomOf="@+id/ti_courseName" />
+
+                <Button
+                    android:id="@+id/btnAdd"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="#60A9FF"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="Continue"
+                    android:textColor="#FFFFFF"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/redColor2" />
+
+                <Button
+                    android:id="@+id/greenColor2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/color_button"
+                    android:backgroundTint="#29e348"
+                    android:text="           "
+                    app:layout_constraintEnd_toStartOf="@+id/redColor2"
+                    app:layout_constraintTop_toBottomOf="@+id/textView_courseName4" />
+
+                <Button
+                    android:id="@+id/redColor2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/color_button"
+                    android:backgroundTint="#f23863"
+                    android:text="           "
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView_courseName4" />
+
+                <Button
+                    android:id="@+id/purpleColor2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/color_button"
+                    android:backgroundTint="#f23bff"
+                    android:text="           "
+                    app:layout_constraintEnd_toStartOf="@+id/blueColor2"
+                    app:layout_constraintTop_toBottomOf="@+id/textView_courseName4" />
+
+                <TextView
+                    android:id="@+id/textView_courseName4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="32dp"
+                    android:text="Color : "
+                    android:textColor="@color/text"
+                    android:textSize="16dp"
+                    app:layout_constraintEnd_toStartOf="@+id/quizEditText"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+                <Button
+                    android:id="@+id/mintColor2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/color_button"
+                    android:backgroundTint="#3fe8be"
+                    android:text="           "
+                    app:layout_constraintStart_toEndOf="@+id/orangeColor2"
+                    app:layout_constraintTop_toBottomOf="@+id/textView_courseName4" />
+
+                <Button
+                    android:id="@+id/blueColor2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/color_button"
+                    android:backgroundTint="#4c8fed"
+                    android:text="           "
+                    app:layout_constraintEnd_toStartOf="@+id/greenColor2"
+                    app:layout_constraintTop_toBottomOf="@+id/textView_courseName4" />
+
+                <Button
+                    android:id="@+id/miColor2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/color_button"
+                    android:backgroundTint="#ffcccc"
+                    android:text="           "
+                    app:layout_constraintStart_toEndOf="@+id/mintColor2"
+                    app:layout_constraintTop_toBottomOf="@+id/textView_courseName4" />
+
+                <Button
+                    android:id="@+id/orangeColor2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/color_button"
+                    android:backgroundTint="#f2c42c"
+                    android:text="           "
+                    app:layout_constraintStart_toEndOf="@+id/redColor2"
+                    app:layout_constraintTop_toBottomOf="@+id/textView_courseName4" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+    </RelativeLayout>
+</layout>

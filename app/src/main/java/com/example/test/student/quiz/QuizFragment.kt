@@ -119,7 +119,7 @@ class QuizFragment : Fragment() {
             mDatabase2 = FirebaseDatabase.getInstance().getReference("QuizDetail")
             val mDatabaseRef2 = mDatabase2.child(id)
 
-            mDatabaseRef2.addValueEventListener(object: ValueEventListener {
+            mDatabaseRef2.addListenerForSingleValueEvent(object: ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
                     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                 }
@@ -136,7 +136,7 @@ class QuizFragment : Fragment() {
             mDatabase2 = FirebaseDatabase.getInstance().getReference("Quiz")
             val mDatabaseRef2 = mDatabase2.child(id)
 
-            mDatabaseRef2.addValueEventListener(object: ValueEventListener {
+            mDatabaseRef2.addListenerForSingleValueEvent(object: ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
                     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                 }

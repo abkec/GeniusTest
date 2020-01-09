@@ -17,6 +17,12 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import androidx.core.view.GravityCompat
+import com.google.firebase.auth.FirebaseAuth
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
+
 
 class StudentMenu : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -25,11 +31,13 @@ class StudentMenu : AppCompatActivity(), NavigationView.OnNavigationItemSelected
     private lateinit var navigationView: NavigationView
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var bottomNavigationView: BottomNavigationView
+    private var auth: FirebaseAuth? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.student_menu)
 
+        auth = FirebaseAuth.getInstance()
         val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
         getSupportActionBar()?.setDisplayShowTitleEnabled(false)
@@ -60,9 +68,16 @@ class StudentMenu : AppCompatActivity(), NavigationView.OnNavigationItemSelected
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
-            R.id.aboutUsFragment -> startActivity(Intent(this, TutorMenu::class.java))
-            R.id.searchFragment -> Toast.makeText(this, "Clicked item two", Toast.LENGTH_SHORT).show()
-            R.id.accSettingsFragment -> Toast.makeText(this, "Clicked item three", Toast.LENGTH_SHORT).show()
+            R.id.aboutUsFragment -> startActivity(Intent(this, AboutUs::class.java))
+            R.id.accSettingsFragment -> startActivity(Intent(this, MainUserSettings::class.java))
+            R.id.logoutButton -> {
+
+                auth!!.signOut()
+                Toast.makeText(this, "You have logged out.", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, Login1:: class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                startActivity(intent)
+            }
         }
         return true
     }
@@ -73,7 +88,7 @@ class StudentMenu : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         } else {
             val builder = AlertDialog.Builder(this,R.style.AlertDialogCustom)
 
-            builder.setMessage("Are you sure you want to Exit ?")
+            builder.setMessage("Are you sure you want to exit ?")
             builder.setCancelable(true)
 
             builder.setNegativeButton("No", DialogInterface.OnClickListener { dialog, i ->
@@ -81,7 +96,11 @@ class StudentMenu : AppCompatActivity(), NavigationView.OnNavigationItemSelected
             })
 
             builder.setPositiveButton("Yes" , DialogInterface.OnClickListener { dialog, i ->
-                finish()
+                dialog.cancel()
+                val a = Intent(Intent.ACTION_MAIN)
+                a.addCategory(Intent.CATEGORY_HOME)
+                a.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(a)
             })
 
             val dialog = builder.create()

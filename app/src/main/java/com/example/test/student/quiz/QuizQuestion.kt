@@ -17,6 +17,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toUri
 import com.example.test.R
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 
@@ -32,6 +33,7 @@ class QuizQuestion : AppCompatActivity() {
     lateinit var radio: RadioButton
     var totalQuestion = 0
     var time = 0
+    var statCourse = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +50,7 @@ class QuizQuestion : AppCompatActivity() {
         time = intent.getStringExtra("time").toInt()
         timerTxt = findViewById(R.id.timer)
         var color = intent.getStringExtra("color")
-
+        readStats()
         toolbar.setBackgroundColor(Color.parseColor(color))
         updateQuestion()
         reverseTimer(time,timerTxt)
@@ -71,6 +73,10 @@ class QuizQuestion : AppCompatActivity() {
 
             finish()
 
+            val currentuser = FirebaseAuth.getInstance().currentUser!!.uid
+            val mDb = FirebaseDatabase.getInstance().getReference("Users").child(currentuser)
+            mDb.child("Stats").child("quiz").setValue(statCourse.plus(1).toString())
+
             val myIntent = Intent(this, QuizResult::class.java)
             myIntent.putExtra("score", correct)
             myIntent.putExtra("totalQuestion", totalQuestion)
@@ -86,7 +92,7 @@ class QuizQuestion : AppCompatActivity() {
             mDatabase = FirebaseDatabase.getInstance().getReference("QuizDetail")
             val mDatabaseRef = mDatabase.child(intent.getStringExtra("id")).child(totalAnswered.toString())
 
-            mDatabaseRef.addValueEventListener(object: ValueEventListener {
+            mDatabaseRef.addListenerForSingleValueEvent(object: ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
                     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                 }
@@ -152,6 +158,28 @@ class QuizQuestion : AppCompatActivity() {
             })
 
         }
+    }
+
+    private fun readStats() {
+
+        val currentuser = FirebaseAuth.getInstance().currentUser!!.uid
+        val mDb = FirebaseDatabase.getInstance().getReference("Users").child(currentuser)
+        var mDatabase2 = mDb.child("Stats")
+        val mDatabaseRef2 = mDatabase2
+
+        mDatabaseRef2.addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+
+                if (p0.exists()) {
+
+                    statCourse = p0.child("quiz").value.toString().toInt()
+                }
+            }
+        })
     }
 
     fun reverseTimer(seconds: Int, tv: TextView) {

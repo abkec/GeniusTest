@@ -24,6 +24,7 @@ import com.example.test.classes.Quiz
 import com.example.test.student.quiz.QuizFragment
 import com.example.test.student.quiz.QuizQuestion
 import com.firebase.ui.database.FirebaseRecyclerAdapter
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_tutor_course.view.*
@@ -54,7 +55,11 @@ class TutorQuizFragment : Fragment() {
 
         mRecylerView = view.findViewById(R.id.tutorQuizRecycler)
         mRecylerView.setLayoutManager(LinearLayoutManager(context))
-        mDatabase = FirebaseDatabase.getInstance().getReference("Quiz")
+
+        val currentuser = FirebaseAuth.getInstance().currentUser!!.uid
+        val mDb = FirebaseDatabase.getInstance().getReference("Users").child(currentuser)
+        mDatabase = mDb.child("Quiz")
+
 
         logRecyclerView()
 
@@ -89,7 +94,9 @@ class TutorQuizFragment : Fragment() {
 
         lateinit var mDatabase2: DatabaseReference
         var totalQuestion = 0
-        var time = ""
+        var currentuser2 : String = FirebaseAuth.getInstance().currentUser!!.uid
+        var mDb2 : DatabaseReference = FirebaseDatabase.getInstance().getReference("Users").child(currentuser2).child("Quiz")
+
 
         init {
 
@@ -115,7 +122,7 @@ class TutorQuizFragment : Fragment() {
                         val delBuilder = AlertDialog.Builder(itemView.context, R.style.AlertDialogCustom)
                         delBuilder.setCancelable(true)
 
-                        delBuilder.setTitle("Delete Course")
+                        delBuilder.setTitle("Delete Quiz")
                         delBuilder.setMessage("Are you sure want to Delete ?")
 
                         delBuilder.setNegativeButton("No", DialogInterface.OnClickListener { dialog2, i ->
@@ -129,8 +136,14 @@ class TutorQuizFragment : Fragment() {
 
                             mDatabase2 = FirebaseDatabase.getInstance().getReference("QuizDetail")
                             mDatabase2.child(itemView.quizID.text.toString()).removeValue()
-                            dialog2.cancel()
 
+                            mDb2.child(itemView.quizID.text.toString()).removeValue()
+
+                            mDb2 = FirebaseDatabase.getInstance().getReference("Users").child(currentuser2).child("QuizDetail")
+                            mDb2.child(itemView.quizID.text.toString()).removeValue()
+
+
+                            dialog2.cancel()
                             Toast.makeText(itemView.context,itemView.quizButton.text.toString() + " deleted.", Toast.LENGTH_SHORT).show()
                         })
 
@@ -153,7 +166,7 @@ class TutorQuizFragment : Fragment() {
             mDatabase2 = FirebaseDatabase.getInstance().getReference("QuizDetail")
             val mDatabaseRef2 = mDatabase2.child(id)
 
-            mDatabaseRef2.addValueEventListener(object : ValueEventListener {
+            mDatabaseRef2.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
                     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                 }

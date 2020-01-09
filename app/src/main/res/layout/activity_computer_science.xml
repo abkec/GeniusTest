@@ -18,14 +18,13 @@
     <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".student.course.ComputerScience">
+    tools:context=".ui.course.ComputerScience">
 
         <ImageView
-            android:id="@+id/imageViewBinary"
+            android:id="@+id/imageViewTopic"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:src="@drawable/ic_binary"
-
+            tools:srcCompat="@tools:sample/avatars"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
@@ -43,29 +42,12 @@
             android:layout_marginEnd="178dp"
             android:layout_marginRight="178dp"
 
-            android:text="Binary"
+            android:text=""
             android:textColor="@android:color/black"
             android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageViewBinary" />
-
-        <TextView
-            android:id="@+id/textView_TopicContent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:text="@string/BinaryContent"
-            android:textColor="@android:color/black"
-            android:textSize="18dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView_TopicTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/imageViewTopic" />
 
         <Button
             android:id="@+id/btnNextTopic"
@@ -73,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginTop="175dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:background="@android:color/holo_blue_light"
@@ -84,7 +66,42 @@
             android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView_TopicContent" />
+            app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
+
+        <ScrollView
+            android:id="@+id/scrollView2"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_TopicTitle">
+
+
+            <TextView
+                android:id="@+id/textView_TopicContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:fontFamily="@font/roboto"
+                android:lineSpacingExtra="3sp"
+                android:textColor="@android:color/black"
+                android:textSize="18dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/scrollView2" />
+
+        </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

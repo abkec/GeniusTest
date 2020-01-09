@@ -47,9 +47,9 @@ class AddQuiz : AppCompatActivity() {
 
         continueButton.setOnClickListener{
 
-            if (TextUtils.isEmpty(titleText.text) || TextUtils.isEmpty(quizText.text)) {
+            if (TextUtils.isEmpty(titleText.text) || TextUtils.isEmpty(quizText.text) || !::imgurl.isInitialized) {
 
-                Toast.makeText(this,"Please fill in all textbox!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,"Please fill in all textbox and add one picture!", Toast.LENGTH_SHORT).show()
             }
 
             else {
@@ -101,7 +101,7 @@ class AddQuiz : AppCompatActivity() {
 
         miColor.setOnClickListener{
 
-            mainColor = "#f23bff"
+            mainColor = "#ffcccc"
             toolbar.setBackgroundColor(Color.parseColor(mainColor))
         }
 
@@ -132,6 +132,11 @@ class AddQuiz : AppCompatActivity() {
             Picasso.with(this).load(imgurl).into(img)
         }
 
+    }
+
+    override fun onBackPressed() {
+
+        finish()
     }
 
     override fun onSupportNavigateUp(): Boolean {

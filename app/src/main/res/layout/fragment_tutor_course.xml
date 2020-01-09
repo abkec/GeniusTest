@@ -3,18 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginBottom="60dp">
 
     <TextView
         android:id="@+id/tv_recent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:text="@string/TutorCourse"
+        android:text="YOUR COURSES"
         android:textSize="12sp"
         app:fontFamily="@font/roboto"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,10 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
         android:text="@string/course"
         android:textAllCaps="true"
         android:textColor="@android:color/black"
@@ -45,51 +41,26 @@
         android:id="@+id/btnAddCourse"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:layout_marginEnd="16dp"
         android:background="@drawable/course_button"
-        android:drawableBottom="@drawable/ic_add"
         android:backgroundTint="@android:color/holo_red_light"
-        android:layout_marginLeft="230dp"
-        android:paddingBottom="3dp"
+        android:drawableBottom="@drawable/ic_add"
         android:paddingLeft="1dp"
-        app:layout_constraintStart_toEndOf="@+id/tv_course_title"
+        android:paddingBottom="3dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_course_title" />
 
-
-    <GridLayout
-
-        android:layout_width="match_parent"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/tutor_course_recycleView"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_recent">
+        app:layout_constraintTop_toBottomOf="@+id/tv_recent"
+        android:paddingBottom="80dp"/>
 
-        <Button
-
-            android:id="@+id/imageBtnComputerScience"
-            android:layout_width="140dp"
-            android:layout_height="140dp"
-            android:layout_row="0"
-            android:layout_column="0"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/course_button"
-            android:backgroundTint="#ffcccc"
-            android:drawableBottom="@drawable/ic_science"
-            android:paddingLeft="10dp"
-            android:paddingTop="10dp"
-            android:paddingRight="10dp"
-            android:paddingBottom="30dp"
-            android:text="Computer Science"
-            android:textSize="12sp">
-
-        </Button>
-
-
-
-    </GridLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

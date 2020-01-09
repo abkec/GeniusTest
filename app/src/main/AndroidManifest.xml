@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".StudentMenu"
+            android:name=".MainMain"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/genius">
             <intent-filter>
@@ -39,15 +39,25 @@
         </activity>
 
         <activity android:name=".Register"></activity>
+        <activity android:name=".student.forum.ForumAdd"></activity>
         <activity android:name=".Forgot_Password" />
         <activity android:name=".Login1" />
-        <activity android:name=".MainMain"></activity>
+        <activity android:name=".StudentMenu"></activity>
         <activity android:name=".TutorMenu"></activity>
         <activity android:name=".tutor.quiz.AddQuiz"></activity>
         <activity android:name=".tutor.quiz.AddQuizDetail"></activity>
-
+        <activity android:name=".student.forum.ForumContent"></activity>
         <activity android:name=".student.course.ComputerScience" />
         <activity android:name=".student.course.CourseContent" />
+        <activity android:name=".tutor.forum.ForumContentTutor" />
+        <activity android:name=".MainUserSettings"></activity>
+        <activity android:name=".PersonalTutor"></activity>
+        <activity android:name=".PersonalUser"></activity>
+        <activity android:name=".TutorAccount"></activity>
+        <activity android:name=".UserAccount"></activity>
+        <activity android:name=".tutor.course.AddCourse"></activity>
+        <activity android:name=".tutor.course.AddTopicDetail"></activity>
+        <activity android:name=".student.course.FinishCourse"></activity>
     </application>
 
 

@@ -12,7 +12,7 @@
 
     <fragment
         android:id="@+id/tutor_navigation_forum"
-        android:name="com.example.test.tutor.forum.ForumFragment"
+        android:name="com.example.test.tutor.forum.TutorForumFragment"
         tools:layout="@layout/fragment_forum"
         />
 

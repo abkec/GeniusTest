@@ -15,6 +15,14 @@
     <string name="back">Back</string>
     <string name="result">Result</string>
     <string name="TutorCourse">Your Courses</string>
+    <string name="finishCourse">Thats All for this Course !</string>
+    <string name="question">Ask a Question</string>
+    <string name="title">Title</string>
+    <string name="question_hint">Be specific of your question</string>
+    <string name="body">Body</string>
+    <string name="body_text">Include all the information someone would need to answer your question</string>
+    <string name="body_hint">Type your question here and explanation</string>
+    <string name="cancel">Cancel</string>
 
     <string name="computerScience">
 
@@ -74,5 +82,58 @@
     <string name="terms_condition">By tapping "Create Account", you have agree to Genius </string>
     <string name="terms">Terms of Service and Privacy Policy</string>
 
+    <string name="user_login">LoginPage</string>
+    <string name="student_radio">Student</string>
+    <string name="tutor_radio">Tutor</string>
 
+    <!-- User Settings-->
+    <string name="user_profile">UserProfile</string>
+    <string name="desc">Profile Picture</string>
+    <string name="chg_pic">Change Picture</string>
+    <string name="settings">Account Settings: </string>
+    <string name="personal">Personal Info</string>
+    <string name="account">Account Info</string>
+    <string name="personal_info">Personal Info: </string>
+    <string name="user_name">Name:</string>
+    <string name="first_name1">First Name</string>
+    <string name="last_name1">Last Name</string>
+    <string name="user_birthday">Birthday:</string>
+    <string name="birthday1">DD-MM-YYYY</string>
+    <string name="user_address">Address:</string>
+    <string name="street">Street Address</string>
+    <string name="city">City</string>
+    <string name="state">State</string>
+    <string name="zip">Zip/Postal Code</string>
+    <string name="country">Country</string>
+    <string name="institution_name">Institution Name: </string>
+    <string name="ins_name">Name of your current institution</string>
+    <string name="update">Update Personal Info</string>
+    <string name="warning">By clicking "Update Personal Info", I acknowledge that all information submitted above is factually correct</string>
+    <string name="email_address_info">Email Address:</string>
+    <string name="email_address_current">Current Email</string>
+    <string name="current_email">Current:</string>
+    <string name="new_email_text">Enter new email address</string>
+    <string name="new_email">New:</string>
+    <string name="password_info">Password:</string>
+    <string name="password_current">Current Password</string>
+    <string name="password_new">New Password</string>
+    <string name="password_new_confirm">Confirm New Password</string>
+    <string name="update_account">Update Account Info</string>
+    <string name="warning_acc">Note: When you change your email or password, a confirmation email will be send to you. If there are any problems, please email us at
+                               <font fgcolor="#173172"><u>geniuslearningapp@gmail.com</u></font></string>
+    <string name="delete">Delete Account</string>
+
+    <!--Country DropDown List-->
+    <string-array name="city_list">
+        <item>Bangkok</item>
+        <item>London</item>
+        <item>Paris</item>
+        <item>Singapore</item>
+        <item>New York</item>
+        <item>Istanbul</item>
+        <item>Dubai</item>
+        <item>Kuala Lumpur</item>
+        <item>Hong Kong</item>
+        <item>Barcelona</item>
+    </string-array>
 </resources>
